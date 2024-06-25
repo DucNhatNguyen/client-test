@@ -1,18 +1,21 @@
 import React from "react";
+import { GetStaticPathsContext, GetStaticProps } from "next";
+import Input from "@/shared/Input/Input";
 import { LuFilter } from "react-icons/lu";
 import { MdOutlineFilterList, MdSearch } from "react-icons/md";
-
 import ProductCard from "@/components/ProductCard";
 import SidebarFilters from "@/components/SideBarFilter";
-import { shoes } from "@/data/content";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
-import Input from "@/shared/Input/Input";
-
-import SectionBrands from "../home/SectionBrands";
-import { NextPageWithLayout } from "@/models";
 import { MainLayout } from "@/components/layout";
+import ButtonSecondary from "@/shared/Button/ButtonSecondary";
+import SectionBrands from "../home/SectionBrands";
 
-const page: NextPageWithLayout = () => {
+export interface ProductListProps {
+  products: any[];
+}
+
+export default function page<NextPageWithLayout>({
+  products,
+}: ProductListProps) {
   return (
     <div className="">
       <div className="container relative flex flex-col lg:flex-row" id="body">
@@ -44,7 +47,7 @@ const page: NextPageWithLayout = () => {
             </div>
           </div>
           <div className="grid flex-1 gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3 ">
-            {shoes.map((item) => (
+            {products.map((item) => (
               <ProductCard showPrevPrice product={item} key={item.slug} />
             ))}
           </div>
@@ -56,7 +59,20 @@ const page: NextPageWithLayout = () => {
       </div>
     </div>
   );
-};
+}
 
 page.Layout = MainLayout;
-export default page;
+// export default page;
+
+export const getStaticProps: GetStaticProps<ProductListProps> = async (
+  context: GetStaticPathsContext
+) => {
+  const res = await fetch("http://localhost:5037/Product");
+  const data = await res.json();
+
+  return {
+    props: {
+      products: data,
+    },
+  };
+};

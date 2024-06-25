@@ -2,10 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
 import React from "react";
-
 import type { ProductType } from "@/data/types";
-
 import LikeButton from "./LikeButton";
+import errorImg from "@/images/error-image.png";
 
 interface ProductCardProps {
   product: ProductType;
@@ -34,9 +33,10 @@ const ProductCard: FC<ProductCardProps> = ({
           href={`/products/${product.slug}`}
         >
           <Image
-            src={product.coverImage}
+            src={errorImg}
             alt={`${product.shoeName} cover photo`}
             className="h-full w-full object-cover object-bottom"
+            onError={() => errorImg}
             priority={true}
           />
         </Link>
