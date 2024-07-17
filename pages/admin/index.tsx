@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 export default function Index<NextPageWithLayout>() {
-  return <>ADmin Home</>;
+  return <>DASHBOARD</>;
 }
 
 Index.Layout = AdminLayout;
