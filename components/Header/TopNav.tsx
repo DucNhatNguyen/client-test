@@ -1,11 +1,27 @@
 import React from "react";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useQuery } from "@apollo/client";
+import { GET_MENUS } from "@/graphql/queries";
 
-import { topNavLinks } from "@/data/content";
+export type Menu = {
+  id: string;
+  link: string;
+  title: string;
+  order: number;
+  childMenus: {
+    id: string;
+    link: string;
+    title: string;
+  }[];
+};
 
-import Language from "../Language";
-import NavigationItem from "../NavItem";
+type Props = {
+  data: Menu[];
+};
 
 const TopNav = () => {
+  const { loading, error, data } = useQuery<Props>(GET_MENUS);
+  console.log("data", data);
   return (
     <div className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 sm:py-0 dark:bg-neutral-800">
       <nav
@@ -39,29 +55,6 @@ const TopNav = () => {
                     <path d="m6 9 6 6 6-6" />
                   </svg>
                 </button>
-
-                {/* <div className="hs-dropdown-menu transition-[opacity,margin] sm:border duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 hidden z-10 top-full sm:w-48 bg-white sm:shadow-md rounded-lg py-2 sm:px-2 dark:bg-neutral-800 sm:dark:border dark:border-neutral-700 dark:divide-neutral-700">
-                  <div className="flex flex-col">
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                      href="#"
-                    >
-                      About
-                    </a>
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                      href="#"
-                    >
-                      Services
-                    </a>
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                      href="#"
-                    >
-                      Customer Story
-                    </a>
-                  </div>
-                </div> */}
               </div>
 
               <div className="hs-dropdown [--strategy:static] sm:[--strategy:absolute] [--adaptive:none] sm:[--trigger:hover] ">
@@ -489,3 +482,12 @@ const TopNav = () => {
 };
 
 export default TopNav;
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const { loading, error, data } = useQuery(GET_MENUS);
+  return {
+    props: {
+      data,
+    },
+  };
+};
