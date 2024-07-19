@@ -4,7 +4,7 @@ const client = new ApolloClient({
   uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
   cache: new InMemoryCache(),
   headers: {
-    authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPHQL_API_KEY}`,
+    authorization: `Bearer dafhsdjkfhasdjklghkasdlghaksdghklasdjgjklasghjkasdhgjklashgk`,
   },
 });
 

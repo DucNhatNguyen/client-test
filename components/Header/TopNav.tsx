@@ -1,27 +1,6 @@
 import React from "react";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { useQuery } from "@apollo/client";
-import { GET_MENUS } from "@/graphql/queries";
-
-export type Menu = {
-  id: string;
-  link: string;
-  title: string;
-  order: number;
-  childMenus: {
-    id: string;
-    link: string;
-    title: string;
-  }[];
-};
-
-type Props = {
-  data: Menu[];
-};
 
 const TopNav = () => {
-  const { loading, error, data } = useQuery<Props>(GET_MENUS);
-  console.log("data", data);
   return (
     <div className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white text-sm py-4 sm:py-0 dark:bg-neutral-800">
       <nav
@@ -482,12 +461,3 @@ const TopNav = () => {
 };
 
 export default TopNav;
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const { loading, error, data } = useQuery(GET_MENUS);
-  return {
-    props: {
-      data,
-    },
-  };
-};

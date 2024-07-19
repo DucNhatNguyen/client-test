@@ -13,12 +13,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout;
 
   return (
-    <Layout>
-      <Suspense fallback={<p>Loading feed...</p>}>
-        <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <Layout>
+        <Suspense fallback={<p>Loading feed...</p>}>
           <Component {...pageProps} />
-        </ApolloProvider>
-      </Suspense>
-    </Layout>
+        </Suspense>
+      </Layout>
+    </ApolloProvider>
   );
 }
