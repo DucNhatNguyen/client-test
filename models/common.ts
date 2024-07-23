@@ -27,3 +27,19 @@ export type Product = {
 	sold: number;
 	profit: number;
   };
+
+  export interface Menu {
+	id: string;
+	link: string;
+	title: string;
+	order: number;
+	childMenus: {
+	  id: string;
+	  link: string;
+	  title: string;
+	}[];
+  }
+  
+  export interface Props {
+	menus: Menu[];
+  }
