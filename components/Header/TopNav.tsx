@@ -44,31 +44,20 @@ const TopNav: FC<Props> = ({ menus }) => {
                   {menu.childMenus?.length > 0 && (
                     <div className="hs-dropdown-menu transition-[opacity,margin] sm:border duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 hidden z-10 top-full sm:w-96 bg-white sm:shadow-md rounded-lg py-2 sm:px-2 dark:bg-neutral-800 sm:dark:border dark:border-neutral-700 dark:divide-neutral-700">
                       <div className="sm:grid sm:grid-cols-2">
-                        {menu.childMenus
-                          .reduce((resultArray: any, item, index) => {
-                            const chunkIndex = Math.floor(index / 3);
-
-                            if (!resultArray[chunkIndex]) {
-                              resultArray[chunkIndex] = [];
-                            }
-
-                            resultArray[chunkIndex].push(item);
-
-                            return resultArray;
-                          }, [])
-                          .map((chunk: any, chunkIndex: number) => (
-                            <div key={chunkIndex} className="flex flex-col">
-                              {chunk.map((child: Menu, childIndex: number) => (
-                                <a
-                                  key={childIndex}
-                                  className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                                  href="#"
-                                >
-                                  {child.title}
-                                </a>
-                              ))}
-                            </div>
-                          ))}
+                        {menu.childMenus?.map(
+                          (
+                            child: { id: string; link: string; title: string },
+                            key: number
+                          ) => (
+                            <a
+                              key={key}
+                              className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                              href="#"
+                            >
+                              {child.title}
+                            </a>
+                          )
+                        )}
                       </div>
                     </div>
                   )}
