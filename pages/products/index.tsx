@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetStaticPathsContext, GetStaticProps } from "next";
 import Input from "@/shared/Input/Input";
 import { LuFilter } from "react-icons/lu";
@@ -8,9 +8,12 @@ import SidebarFilters from "@/components/SideBarFilter";
 import { MainLayout } from "@/components/layout";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import SectionBrands from "../home/SectionBrands";
+import { GET_PRODUCTS } from "@/graphql/queries";
+import { ProductType } from "@/models";
+import { GraphQLClient } from "graphql-request";
 
 export interface ProductListProps {
-  products: any[];
+  products: ProductType[];
 }
 
 export default function page<NextPageWithLayout>({
@@ -18,13 +21,16 @@ export default function page<NextPageWithLayout>({
 }: ProductListProps) {
   return (
     <div className="">
-      <div className="container relative flex flex-col lg:flex-row" id="body">
+      <div
+        className="container bg-white relative flex flex-col lg:flex-row"
+        id="body"
+      >
         <div className="pr-4 pt-10 lg:basis-1/3 xl:basis-1/4">
           <SidebarFilters />
         </div>
         <div className="mb-10 shrink-0 border-t lg:mx-4 lg:mb-0 lg:border-t-0" />
         <div className="relative flex-1">
-          <div className="top-20 z-10 mb-3 items-center gap-5 space-y-5 bg-white py-10 lg:sticky lg:flex lg:space-y-0">
+          <div className="top-32 z-10 mb-3 items-center gap-5 space-y-5 bg-white py-10 lg:sticky lg:flex lg:space-y-0">
             <div className="flex flex-1 items-center gap-2 rounded-full border border-neutral-300 px-4">
               <MdSearch className="text-2xl text-neutral-500" />
               <Input
@@ -47,7 +53,7 @@ export default function page<NextPageWithLayout>({
             </div>
           </div>
           <div className="grid flex-1 gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3 ">
-            {products.map((item) => (
+            {products?.map((item) => (
               <ProductCard showPrevPrice product={item} key={item.slug} />
             ))}
           </div>
@@ -62,17 +68,15 @@ export default function page<NextPageWithLayout>({
 }
 
 page.Layout = MainLayout;
-// export default page;
 
 export const getStaticProps: GetStaticProps<ProductListProps> = async (
   context: GetStaticPathsContext
 ) => {
-  const res = await fetch("http://localhost:5037/Product");
-  const data = await res.json();
-
+  const graphQLClient = new GraphQLClient("http://localhost:3000/api/graphql");
+  const res = await graphQLClient.request<any>(GET_PRODUCTS);
   return {
     props: {
-      products: data,
+      products: res.products.items ?? [],
     },
   };
 };

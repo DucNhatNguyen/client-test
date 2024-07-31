@@ -15,8 +15,11 @@ const TopNav: FC<Props> = ({ menus }) => {
             className="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block"
           >
             <div className="flex flex-col gap-y-3 space-x-2 sm:gap-y-0 mt-5 sm:flex-row sm:items-center sm:justify-center sm:mt-0 sm:ps-5">
-              {menus?.map((menu: Menu) => (
-                <div className="hs-dropdown [--strategy:static] sm:[--strategy:absolute] [--adaptive:none] sm:[--trigger:hover] ">
+              {menus?.map((menu: Menu, key: number) => (
+                <div
+                  key={key}
+                  className="hs-dropdown [--strategy:static] sm:[--strategy:absolute] [--adaptive:none] sm:[--trigger:hover] "
+                >
                   <button
                     type="button"
                     className="sm:p-3 flex items-center w-full text-gray-600 hover:text-gray-400 font-medium dark:text-neutral-400 dark:hover:text-neutral-500"
@@ -52,7 +55,7 @@ const TopNav: FC<Props> = ({ menus }) => {
                             <a
                               key={key}
                               className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                              href="#"
+                              href="/jajajajaj"
                             >
                               {child.title}
                             </a>

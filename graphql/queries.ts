@@ -15,3 +15,27 @@ export const GET_MENUS = gql`
         }
     }
 `
+
+export const GET_PRODUCTS = gql`
+    query {
+        products {
+            items {
+            categoryId
+            coverImage
+            currentPrice
+            id
+            justIn
+            name
+            overview
+            piecesSold
+            previousPrice
+            rating
+                category {
+                    id
+                    name
+                    type
+                }
+            }
+        }
+    }
+`

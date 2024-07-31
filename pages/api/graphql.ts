@@ -8,11 +8,10 @@ export const config = {
     }
 }
 const proxy = createProxyMiddleware({
-    target: 'http://localhost:5037/graphql',
+    target: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
     changeOrigin: true,
-    pathRewrite: {
-      '/graphql': '/',
-    },
+    pathRewrite: { "^/graphql": "/" },
+
   });
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<any>) {

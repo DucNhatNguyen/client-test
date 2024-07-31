@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
 import React from "react";
-import type { ProductType } from "@/data/types";
 import LikeButton from "./LikeButton";
 import errorImg from "@/images/error-image.png";
+import { ProductType } from "@/models";
 
 interface ProductCardProps {
   product: ProductType;
@@ -34,7 +34,7 @@ const ProductCard: FC<ProductCardProps> = ({
         >
           <Image
             src={errorImg}
-            alt={`${product.shoeName} cover photo`}
+            alt={`${product.name} cover photo`}
             className="h-full w-full object-cover object-bottom"
             onError={() => errorImg}
             priority={true}
@@ -43,7 +43,7 @@ const ProductCard: FC<ProductCardProps> = ({
       </div>
       <div className="mt-3">
         <div className="flex items-center justify-between">
-          <h3 className="font-semibold">{product.shoeName}</h3>
+          <h3 className="font-semibold">{product.name}</h3>
           <p
             className={`text-neutral-500 ${
               showPrevPrice ? "block" : "hidden"
@@ -54,7 +54,7 @@ const ProductCard: FC<ProductCardProps> = ({
         </div>
 
         <div className="flex items-center justify-between">
-          <p className="text-sm text-neutral-500">{product.shoeCategory}</p>
+          <p className="text-sm text-neutral-500">{product.category.name}</p>
           <p className="text-lg font-medium text-primary">
             ${product.currentPrice}
           </p>

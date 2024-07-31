@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
-import { ComponentType, ReactElement, ReactNode } from 'react'
+import { StaticImageData } from 'next/image'
+import { ReactElement, ReactNode } from 'react'
 
 export interface LayoutProps {
 	children: ReactNode
@@ -43,3 +44,21 @@ export type Product = {
   export interface Props {
 	menus: Menu[];
   }
+
+
+  export type ProductType = {
+	slug: string;
+	name: string;
+	shoeCategory: string;
+	coverImage: StaticImageData | string;
+	currentPrice: number;
+	previousPrice: number;
+	rating: number;
+	pieces_sold: number;
+	justIn: boolean;
+	category: {
+		id: string;
+		name: string;
+		type: number
+	}
+  };
